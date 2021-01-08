@@ -4,26 +4,28 @@ import PlayerSubmissionForm from './PlayerSubmissionForm';
 import FinalPoem from './FinalPoem';
 import RecentSubmission from './RecentSubmission';
 
-const Game = () => {
-  const Game = (props) => {
+const Game = (props) => {
 
-    const [savedLines, addSavedLines] = useState([]);
-    const [newLine, setNewLine] = useState('');
-    const [poemResult, setPoemResult] = useState(false);
+  const [savedLines, addSavedLines] = useState([]);
+  const [newLine, setNewLine] = useState('');
+  const [player, setPlayer] = useState(1);
+  const [gameCompletion, setGameCompletion] = useState(false);
   
-    const [player, setPlayer] = useState(1);
+  const saveLine = (submittedLine) => {
+    const newSavedLines = [...savedLines]
+    const newestLine = Object.values(submittedLine).join(' ');
   
-    const saveLine = (submittedLine) => {
-      const newSavedLines = [...savedLines]
-      const newestLine = Object.values(submittedLine).join(" ");
+    newSavedLines.push(newestLine)//Add new line to poem
   
-      newSavedLines.push(newestLine)//Add new line to poem
+    setNewLine(newestLine);//makes new line out of submission
+    addSavedLines(newSavedLines);//update poem with submission
   
-      setNewLine(newestLine);//makes new line out of submission
-      addSavedLines(newSavedLines);//update poem with submission
-  
-      setPlayer(player + 1);
-    };
+    setPlayer(player + 1);
+  };
+
+  const isGameFinished = (status) => {
+    setGameCompletion(status);
+  };
 
   const exampleFormat = FIELDS.map((field) => {
     if (field.key) {
@@ -45,11 +47,18 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission newLine={newLine}/>
+      {newLine !== '' && gameCompletion === false &&
+        <RecentSubmission newLine={ newLine } />
+      }
 
-      <PlayerSubmissionForm submitPlayerLine={saveLine} player={player}/>
+      {gameCompletion === false &&
+      <PlayerSubmissionForm submitPlayerLine={saveLine} player={player}/>}
 
-      <FinalPoem savedLines={savedLines}/>
+      <FinalPoem savedLines={savedLines} isGameFinished={isGameFinished}/>
+       {/* <input type="button">Reset Game</input> */}
+      <div className="ResetGame-btn-container" >
+        <input type="button" value="Reset Game" className="ResetGame-btn" onClick={resetGame}/>
+      </div>
 
     </div>
   );

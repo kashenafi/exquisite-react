@@ -2,3 +2,23 @@
   text-align: center;
   font-style: italic;
 }
+
+.ResetGame-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+  width: 200px;
+}
+
+.ResetGame-btn-container {
+  flex: 0.8;
+
+  padding: 1rem;
+  border: 2px black solid;
+  box-shadow: 5px 10px black;
+  transition: 0.25s;
+}
+
+.ResetGame-btn-container:hover {
+  background-color: tomato;
+}  
