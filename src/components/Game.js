@@ -11,19 +11,18 @@ const Game = () => {
     const [newLine, setNewLine] = useState('');
     const [poemResult, setPoemResult] = useState(false);
   
-    let playerNumber = 1;
+    const [player, setPlayer] = useState(1);
   
     const saveLine = (submittedLine) => {
       const newSavedLines = [...savedLines]
       const newestLine = Object.values(submittedLine).join(" ");
   
       newSavedLines.push(newestLine)//Add new line to poem
-      playerNumber++;
-      console.log('Player Number: ' + playerNumber) //Update player
   
       setNewLine(newestLine);//makes new line out of submission
       addSavedLines(newSavedLines);//update poem with submission
   
+      setPlayer(player + 1);
     };
 
   const exampleFormat = FIELDS.map((field) => {
@@ -48,7 +47,7 @@ const Game = () => {
 
       <RecentSubmission newLine={newLine}/>
 
-      <PlayerSubmissionForm submitPlayerLine={saveLine} playerNumber={playerNumber}/>
+      <PlayerSubmissionForm submitPlayerLine={saveLine} player={player}/>
 
       <FinalPoem savedLines={savedLines}/>
 
