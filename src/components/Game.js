@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Game.css';
 import PlayerSubmissionForm from './PlayerSubmissionForm';
 import FinalPoem from './FinalPoem';
