@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 
 import './PlayerSubmissionForm.css';
@@ -23,11 +23,20 @@ const PlayerSubmissionForm = () => {
       setWordFields(newWordFields);
     }
 
+  const checkFields = () => {
+    for (let key in wordFields) {
+      if (wordFields[key] === "") {
+        return false; 
+      }
+    };
+    return true;
+  };
+
 //Submit line
     const onFormSubmit = (event) => {
       event.preventDefault(); 
   
-      if(wordFields.adjOne !== ''){
+      if(checkFields()){
         console.log("Word Fields: " + wordFields)
         props.submitPlayerLine(wordFields);
   
@@ -40,6 +49,8 @@ const PlayerSubmissionForm = () => {
           adjTwo: '',
           nounTwo: ''
         })
+      } else {
+
       }
     };
 
