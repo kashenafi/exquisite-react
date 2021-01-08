@@ -1,6 +1,5 @@
 import React, { useState, isValidElement } from 'react';
 import PropTypes from 'prop-types';
-
 import './PlayerSubmissionForm.css';
 
 const PlayerSubmissionForm = (props) => {

@@ -27,6 +27,13 @@ const Game = (props) => {
     setGameCompletion(status);
   };
 
+  const resetGame = () => {
+    setNewLine('');
+    addSavedLines([]);
+    setPlayer(1);
+    setGameCompletion(false);
+  }
+
   const exampleFormat = FIELDS.map((field) => {
     if (field.key) {
       return field.placeholder;
@@ -46,11 +53,13 @@ const Game = (props) => {
       <p className="Game__format-example">
         { exampleFormat }
       </p>
-
+      
+      {/* //REQ: Verify: The form to submit new lines is hidden */}
       {newLine !== '' && gameCompletion === false &&
         <RecentSubmission newLine={ newLine } />
       }
 
+      {/* //REQ: Verify: The form to submit new lines is hidden */}
       {gameCompletion === false &&
       <PlayerSubmissionForm submitPlayerLine={saveLine} player={player}/>}
 
