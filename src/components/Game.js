@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Game.css';
 import PlayerSubmissionForm from './PlayerSubmissionForm';
 import FinalPoem from './FinalPoem';
 import RecentSubmission from './RecentSubmission';
 
-const Game = (props) => {
+const Game = () => {
 
   const [submissions, setSubmissions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
   const exampleFormat = FIELDS.map((field) => {
     if (field.key) {
       return field.placeholder;
