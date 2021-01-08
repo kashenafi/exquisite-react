@@ -6,34 +6,8 @@ import RecentSubmission from './RecentSubmission';
 
 const Game = (props) => {
 
-  const [savedLines, addSavedLines] = useState([]);
-  const [newLine, setNewLine] = useState('');
-  const [player, setPlayer] = useState(1);
-  const [gameCompletion, setGameCompletion] = useState(false);
-  
-  const saveLine = (submittedLine) => {
-    const newSavedLines = [...savedLines]
-    const newestLine = Object.values(submittedLine).join(' ');
-  
-    newSavedLines.push(newestLine)//Add new line to poem
-  
-    setNewLine(newestLine);//makes new line out of submission
-    addSavedLines(newSavedLines);//update poem with submission
-  
-    setPlayer(player + 1);
-  };
-
-  const isGameFinished = (status) => {
-    setGameCompletion(status);
-  };
-
-  const resetGame = () => {
-    setNewLine('');
-    addSavedLines([]);
-    setPlayer(1);
-    setGameCompletion(false);
-  }
-
+  const [submissions, setSubmissions] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const exampleFormat = FIELDS.map((field) => {
     if (field.key) {
       return field.placeholder;
@@ -41,6 +15,14 @@ const Game = (props) => {
       return field;
     }
   }).join(' ');
+
+  const addSubmission = (submission) => {
+    setSubmissions([ ...submissions, submission ])
+  }
+
+  const revealPoem = () => {
+    setIsSubmitted(true);
+  }
 
   return (
     <div className="Game">
@@ -54,19 +36,14 @@ const Game = (props) => {
         { exampleFormat }
       </p>
       
-      {/* //REQ: Verify: The form to submit new lines is hidden */}
-      {newLine !== '' && gameCompletion === false &&
-        <RecentSubmission newLine={ newLine } />
-      }
+      {isSubmitted || !submissions.length || <RecentSubmission submission={ submissions[submissions.length - 1] } />}
 
-      {/* //REQ: Verify: The form to submit new lines is hidden */}
-      {gameCompletion === false &&
-      <PlayerSubmissionForm submitPlayerLine={saveLine} player={player}/>}
+      {isSubmitted || <PlayerSubmissionForm fields={FIELDS} sendSubmission={addSubmission} index={ submissions.length + 1 } />}
 
-      <FinalPoem savedLines={savedLines} isGameFinished={isGameFinished}/>
-       {/* <input type="button">Reset Game</input> */}
+      <FinalPoem isSubmitted={isSubmitted} submissions={submissions} revealPoem={revealPoem} />
+
       <div className="ResetGame-btn-container" >
-        <input type="button" value="Reset Game" className="ResetGame-btn" onClick={resetGame}/>
+        <input type="button" value="Reset Game" className="ResetGame-btn" onClick={revealPoem}/>
       </div>
 
     </div>
