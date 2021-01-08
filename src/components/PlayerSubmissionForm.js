@@ -22,25 +22,32 @@ const PlayerSubmissionForm = () => {
       newWordFields[event.target.name] = event.target.value;
       setWordFields(newWordFields);
     }
-  
+
+//Submit line
+
     const onFormSubmit = (event) => {
       event.preventDefault(); 
   
-      props.submitPlayerLine(wordFields);
+      if(wordFields.adjOne !== ''){
+        console.log("Word Fields: " + wordFields)
+        console.log("Player Submission Player Number: " + props.playerNumber)
+        props.submitPlayerLine(wordFields);
   
-      setWordFields({
-        adjOne: '',
-        nounOne: '',
-        adverb: '',
-        verb: '',
-        adjTwo: '',
-        nounTwo: ''
-      });
+  
+        setWordFields({
+          adjOne: '',
+          nounOne: '',
+          adverb: '',
+          verb: '',
+          adjTwo: '',
+          nounTwo: ''
+        })
+      }
     };
 
   return (
     <div className="PlayerSubmissionForm">
-      <h3>Player Submission Form for Player #{  }</h3>
+      <h3>Player Submission Form for Player #{props.playerNumber}</h3>
 
       <form className="PlayerSubmissionForm__form" onSubmit={onFormSubmit}>
 

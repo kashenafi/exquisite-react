@@ -5,6 +5,27 @@ import FinalPoem from './FinalPoem';
 import RecentSubmission from './RecentSubmission';
 
 const Game = () => {
+  const Game = (props) => {
+
+    const [savedLines, addSavedLines] = useState([]);
+    const [newLine, setNewLine] = useState('');
+    const [poemResult, setPoemResult] = useState(false);
+  
+    let playerNumber = 1;
+  
+    const saveLine = (submittedLine) => {
+      const newSavedLines = [...savedLines]
+      const newestLine = Object.values(submittedLine).join(" ");
+  
+      newSavedLines.push(newestLine)//Add new line to poem
+      playerNumber++;
+      console.log('Player Number: ' + playerNumber) //Update player
+  
+      setNewLine(newestLine);//makes new line out of submission
+      addSavedLines(newSavedLines);//update poem with submission
+  
+    };
+
   const exampleFormat = FIELDS.map((field) => {
     if (field.key) {
       return field.placeholder;
@@ -25,11 +46,11 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission />
+      <RecentSubmission newLine={newLine}/>
 
-      <PlayerSubmissionForm />
+      <PlayerSubmissionForm submitPlayerLine={saveLine} playerNumber={playerNumber}/>
 
-      <FinalPoem />
+      <FinalPoem savedLines={savedLines}/>
 
     </div>
   );
